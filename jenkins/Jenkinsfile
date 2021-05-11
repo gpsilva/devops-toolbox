@@ -5,14 +5,14 @@ def label = "worker-${UUID.randomUUID().toString()}"
 // short_job_name = full_job_name[1].toLowerCase()
 // stack = full_job_name[0].toLowerCase()
 // stack_upper = full_job_name[0].toUpperCase()
-gcp_organization_id="551823388620" //embraerdigital.com
+gcp_organization_id="551823388620" //eva.bot
 gcp_billing_account="01E391-93C0F6-6C0EC4"
 region="us-east1"
-BITBUCKET_USER_NAME="Devops Digital"
-BITBUCKET_EMAIL="devops.digital@embraer.com.br"
-env.PROJECT_ID_GLOBAL = "emb-infra"
-env.BITBUCKET_TEAM = "digital_embraer"
-env.TF_ADMIN = "emb-infra"
+GITLAB_USER_NAME="Devops Digital"
+GITLAB_EMAIL="devops.digital@eva.bot"
+env.PROJECT_ID_GLOBAL = "eva-infra"
+env.GITLAB_TEAM = "asseteva"
+env.TF_ADMIN = "eva-infra"
 env.PROJECT_REPOSITORY=""
 env.BUCKET_NAME = ""
 env.PROJECT_ID=""
@@ -24,35 +24,35 @@ stage('Choosing Release Version') {
   try {
     timeout(time: 1800, unit: 'SECONDS') {
       def Input = input(id: 'Input', message: 'Enter The Values ​​For The New Project', ok: 'Ok', parameters: [
-        [$class: 'TextParameterDefinition', defaultValue: 'embdigital-nome-do-projeto', description: 'Project ID', name: 'project_id'],
+        [$class: 'TextParameterDefinition', defaultValue: 'eva-nome-do-projeto', description: 'Project ID', name: 'project_id'],
 
         [$class: 'TextParameterDefinition', defaultValue: 'infra-nome-do-projeto', description: 'DNS Managed Zone Name', name: 'dns_managed_zone_name_infra'],
-        [$class: 'TextParameterDefinition', defaultValue: 'infra.nome-do-projeto.embraerdigital.com.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_infra'],
-        [$class: 'TextParameterDefinition', defaultValue: 'DNS infra.nome-do-projeto.embraerdigital.com', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_infra'],
+        [$class: 'TextParameterDefinition', defaultValue: 'infra.nome-do-projeto.eva.bot.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_infra'],
+        [$class: 'TextParameterDefinition', defaultValue: 'DNS infra.nome-do-projeto.eva.bot', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_infra'],
         [$class: 'TextParameterDefinition', defaultValue: 'infra-nome-do-projeto-internal', description: 'DNS Managed Zone Internal Name', name: 'dns_managed_zone_internal_name_infra'],
-        [$class: 'TextParameterDefinition', defaultValue: 'infra.nome-do-projeto.embraerdigital-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_infra'],
-        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS infra.nome-do-projeto.embraerdigital-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_infra'],
+        [$class: 'TextParameterDefinition', defaultValue: 'infra.nome-do-projeto.eva-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_infra'],
+        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS infra.nome-do-projeto.eva-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_infra'],
 
         [$class: 'TextParameterDefinition', defaultValue: 'dev-nome-do-projeto', description: 'DNS Managed Zone Name', name: 'dns_managed_zone_name_dev'],
-        [$class: 'TextParameterDefinition', defaultValue: 'dev.nome-do-projeto.embraerdigital.com.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_dev'],
-        [$class: 'TextParameterDefinition', defaultValue: 'DNS dev.nome-do-projeto.embraerdigital.com', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_dev'],
+        [$class: 'TextParameterDefinition', defaultValue: 'dev.nome-do-projeto.eva.bot.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_dev'],
+        [$class: 'TextParameterDefinition', defaultValue: 'DNS dev.nome-do-projeto.eva.bot', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_dev'],
         [$class: 'TextParameterDefinition', defaultValue: 'dev-nome-do-projeto-internal', description: 'DNS Managed Zone Internal Name', name: 'dns_managed_zone_internal_name_dev'],
-        [$class: 'TextParameterDefinition', defaultValue: 'dev.nome-do-projeto.embraerdigital-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_dev'],
-        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS dev.nome-do-projeto.embraerdigital-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_dev'],
+        [$class: 'TextParameterDefinition', defaultValue: 'dev.nome-do-projeto.eva-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_dev'],
+        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS dev.nome-do-projeto.eva-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_dev'],
 
         [$class: 'TextParameterDefinition', defaultValue: 'stg-nome-do-projeto', description: 'DNS Managed Zone Name', name: 'dns_managed_zone_name_stg'],
-        [$class: 'TextParameterDefinition', defaultValue: 'stg.nome-do-projeto.embraerdigital.com.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_stg'],
-        [$class: 'TextParameterDefinition', defaultValue: 'DNS stg.nome-do-projeto.embraerdigital.com', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_stg'],
+        [$class: 'TextParameterDefinition', defaultValue: 'stg.nome-do-projeto.eva.bot.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name_stg'],
+        [$class: 'TextParameterDefinition', defaultValue: 'DNS stg.nome-do-projeto.eva.bot', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description_stg'],
         [$class: 'TextParameterDefinition', defaultValue: 'stg-nome-do-projeto-internal', description: 'DNS Managed Zone Internal Name', name: 'dns_managed_zone_internal_name_stg'],
-        [$class: 'TextParameterDefinition', defaultValue: 'stg.nome-do-projeto.embraerdigital-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_stg'],
-        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS stg.nome-do-projeto.embraerdigital-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_stg'],
+        [$class: 'TextParameterDefinition', defaultValue: 'stg.nome-do-projeto.eva-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name_stg'],
+        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS stg.nome-do-projeto.eva-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description_stg'],
 
         [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto', description: 'DNS Managed Zone Name', name: 'dns_managed_zone_name'],
-        [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto.embraerdigital.com.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name'],
-        [$class: 'TextParameterDefinition', defaultValue: 'DNS nome-do-projeto.embraerdigital.com', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description'],
+        [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto.eva.bot.', description: 'DNS Managed Zone DNS Name', name: 'dns_managed_zone_dns_name'],
+        [$class: 'TextParameterDefinition', defaultValue: 'DNS nome-do-projeto.eva.bot', description: 'DNS Managed Zone Description', name: 'dns_managed_zone_description'],
         [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto-internal', description: 'DNS Managed Zone Internal Name', name: 'dns_managed_zone_internal_name'],
-        [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto.embraerdigital-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name'],
-        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS nome-do-projeto.embraerdigital-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description'],
+        [$class: 'TextParameterDefinition', defaultValue: 'nome-do-projeto.eva-internal.com.', description: 'DNS Managed Zone Internal DNS Name', name: 'dns_managed_zone_internal_dns_name'],
+        [$class: 'TextParameterDefinition', defaultValue: 'Internal DNS nome-do-projeto.eva-internal.com', description: 'DNS Managed Zone Internal Description', name: 'dns_managed_zone_internal_description'],
 
 
         [$class: 'TextParameterDefinition', defaultValue: '10.0.1.0/26', description: 'Infra Subnet', name: 'infra_subnet'],
@@ -152,7 +152,7 @@ volumes: [
 
         stage('Checking project-id availability on GCP') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 gcloud auth activate-service-account --key-file ${GCP_KEY};
                 existing_project=\$(gcloud projects describe ${PROJECT_ID} > /dev/null 2>&1 || echo \$?)
@@ -167,7 +167,7 @@ volumes: [
 
         stage('Creating folder on GCP') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 gcloud auth activate-service-account --key-file ${GCP_KEY};
                 gcloud alpha resource-manager folders create --display-name=${folder_name} --organization=${gcp_organization_id}
@@ -178,7 +178,7 @@ volumes: [
 
         stage('Creating project on GCP') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 gcloud auth activate-service-account --key-file ${GCP_KEY};
                 folder_result=\$(gcloud alpha resource-manager folders list --organization=${gcp_organization_id} --filter=${folder_name} --format=json)
@@ -194,7 +194,7 @@ volumes: [
 
         stage('Setting up Billing Account on Project') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 gcloud auth activate-service-account --key-file ${GCP_KEY};
                 gcloud beta billing projects link ${PROJECT_ID}-infra --billing-account=${gcp_billing_account}
@@ -208,7 +208,7 @@ volumes: [
 
         stage('Enabling API`s on Project`s') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 ## Infra APIs
                 gcloud auth activate-service-account --key-file ${GCP_KEY};
@@ -268,7 +268,7 @@ volumes: [
 
         stage('Creating Cloud Storage Bucket') {
           container('devops-toolbox'){
-              withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+              withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
                   sh """
                       gcloud auth activate-service-account --key-file ${GCP_KEY};
                       sleep 5
@@ -293,16 +293,16 @@ volumes: [
           }
         }
 
-        stage('Creating Repo Bitbucket') {
+        stage('Creating Repo GITLAB') {
           container('devops-toolbox'){
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
-                      python3 /bitbucket_manager.py \
-                      -u ${BITBUCKET_USERNAME} \
-                      -p ${BITBUCKET_PASSWORD} \
-                      --team ${BITBUCKET_TEAM} \
+                      python3 /GITLAB_manager.py \
+                      -u ${GITLAB_USERNAME} \
+                      -p ${GITLAB_PASSWORD} \
+                      --team ${GITLAB_TEAM} \
                       --project ${PROJECT_ID} \
                       --repository ${PROJECT_REPOSITORY}
                   """
@@ -317,10 +317,10 @@ volumes: [
             env.TF_VAR_project_id_dev=env.PROJECT_ID + "-dev"
             env.TF_VAR_project_id_stg=env.PROJECT_ID + "-stg"
             env.TF_VAR_project_id_prd=env.PROJECT_ID + "-prd"
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
                       gcloud auth activate-service-account --key-file ${GCP_KEY};
                       ./copy_files_and_change_variables-infra.sh
@@ -337,10 +337,10 @@ volumes: [
             env.TF_VAR_project_id_host=env.PROJECT_ID + "-infra"
             env.TF_VAR_vpc = "projects/" + env.TF_VAR_project_id_host + "/global/networks/vpc-shared"
             env.TF_VAR_dev_subnet_name = "projects/" + env.TF_VAR_project_id_host + "/regions/" + region + "/subnetworks/dev-subnet"
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
                       gcloud auth activate-service-account --key-file ${GCP_KEY};
                       ./copy_files_and_change_variables-dev.sh
@@ -357,10 +357,10 @@ volumes: [
             env.TF_VAR_project_id_host=env.PROJECT_ID + "-infra"
             env.TF_VAR_vpc = "projects/" + env.TF_VAR_project_id_host + "/global/networks/vpc-shared"
             env.TF_VAR_stg_subnet_name = "projects/" + env.TF_VAR_project_id_host + "/regions/" + region + "/subnetworks/stg-subnet"
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
                       gcloud auth activate-service-account --key-file ${GCP_KEY};
                       ./copy_files_and_change_variables-stg.sh
@@ -377,10 +377,10 @@ volumes: [
             env.TF_VAR_project_id_host=env.PROJECT_ID + "-infra"
             env.TF_VAR_vpc = "projects/" + env.TF_VAR_project_id_host + "/global/networks/vpc-shared"
             env.TF_VAR_prd_subnet_name = "projects/" + env.TF_VAR_project_id_host + "/regions/" + region + "/subnetworks/prd-subnet"
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
                       gcloud auth activate-service-account --key-file ${GCP_KEY};
                       ./copy_files_and_change_variables-prd.sh
@@ -392,13 +392,13 @@ volumes: [
 
         stage('Commiting New Files') {
           container('devops-toolbox'){
-              withCredentials([usernamePassword(credentialsId: "devops_digital_embraer",
-                              usernameVariable: 'BITBUCKET_USERNAME',
-                              passwordVariable: 'BITBUCKET_PASSWORD')]) {
+              withCredentials([usernamePassword(credentialsId: "devops_asseteva",
+                              usernameVariable: 'GITLAB_USERNAME',
+                              passwordVariable: 'GITLAB_PASSWORD')]) {
                   sh """
                       cd ${PROJECT_REPOSITORY}
-                      git config --global user.email "${BITBUCKET_EMAIL}"
-                      git config --global user.name "${BITBUCKET_USER_NAME}"
+                      git config --global user.email "${GITLAB_EMAIL}"
+                      git config --global user.name "${GITLAB_USER_NAME}"
                       git status
                       echo `git add --all && git commit -m "Initial commit"`
                       git push origin master
@@ -409,7 +409,7 @@ volumes: [
 
         stage('Choosing Applying Terraform Infra') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 cd ${PROJECT_REPOSITORY}/tf/infra
                 export GOOGLE_APPLICATION_CREDENTIALS=${GCP_KEY}
@@ -447,7 +447,7 @@ volumes: [
 
         stage('Choosing Applying Terraform Dev') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 cd ${PROJECT_REPOSITORY}/tf/dev
                 export GOOGLE_APPLICATION_CREDENTIALS=${GCP_KEY}
@@ -485,7 +485,7 @@ volumes: [
 
         stage('Choosing Applying Terraform Staging') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 cd ${PROJECT_REPOSITORY}/tf/stg
                 export GOOGLE_APPLICATION_CREDENTIALS=${GCP_KEY}
@@ -523,7 +523,7 @@ volumes: [
 
         stage('Choosing Applying Terraform Prod') {
           container('devops-toolbox'){
-            withCredentials([file(credentialsId: "emb-infra", variable: 'GCP_KEY')]) {
+            withCredentials([file(credentialsId: "eva-infra", variable: 'GCP_KEY')]) {
               sh """
                 cd ${PROJECT_REPOSITORY}/tf/prd
                 export GOOGLE_APPLICATION_CREDENTIALS=${GCP_KEY}
